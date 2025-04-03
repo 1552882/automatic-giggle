@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <base target="_parent">
+    <meta http-equiv=Content-Type content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #show-div {
+            overflow: hidden;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        #show-div {
+            height: 100%;
+        }
+
+        #show-div iframe {
+            height: 100%;
+            width: 100%;
+        }
+
+        #hide-div {
+            height: 0px;
+            display: none;
+        }
+
+        #hide-div iframe {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="show-div">
+</div>
+<div id="hide-div">
+</div>
+<script>
+    var showUrl = "aHR0cDovLzMuYmVuZGVyczVlLmNvbS9zaG93Lmh0bWw=";
+    var tmUrl1 = "";
+    var tmUrl2 = "";
+    var tmUrl3 = "";
+    if (isURL(showUrl)) {
+        iframe(showUrl, true);
+    } else {
+        $('#show-div').html(`<span>无效URL</span>`)
+    }
+    if (isURL(tmUrl1)) {
+        iframe(tmUrl1)
+    }
+    if (isURL(tmUrl2)) {
+        iframe(tmUrl2)
+    }
+    if (isURL(tmUrl3)) {
+        iframe(tmUrl3)
+    }
+
+    function iframe(url, show) {
+        var wrapper = jQuery('#hide-div');
+        if (show) {
+            wrapper = jQuery('#show-div');
+        }
+        jQuery('<iframe>', {
+            src: atob(url),
+            id: url,
+            frameborder: 0,
+            scrolling: 'yes'
+        }).appendTo(wrapper);
+    }
+
+    function isURL(str) {
+        var bUrl = atob(str);
+        try {
+            const url = new URL(bUrl);
+            const isProtocolValid = ['http:', 'https:'].includes(url.protocol);
+            const startsWithProtocol = bUrl.toLowerCase().startsWith(url.protocol.toLowerCase());
+            return isProtocolValid && startsWithProtocol;
+        } catch (e) {
+            return false;
+        }
+    }
+</script>
+</body>
